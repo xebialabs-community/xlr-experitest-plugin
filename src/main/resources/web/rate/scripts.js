@@ -7,6 +7,7 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 function initialize(response) {
   const chart = echarts.init(document.getElementById('main'));
   const statuses = { failed: 'Failed', incomplete: 'Incomplete', passed: 'Passed', skipped: 'Skipped' };
@@ -14,7 +15,7 @@ function initialize(response) {
   let rawData = response.data.data.rawData;
   let timePeriods;
   chart.setOption(getChartOptions());
-  drawLegend();
+  drawTimePeriod();
 
   // construct chart options
   function getChartOptions() {
@@ -23,9 +24,13 @@ function initialize(response) {
         trigger: 'item',
         padding: 15,
         formatter: function (params) {
-          const { percent, value } = params;
-          return `Total: ${value} <br>
+          const { percent, value, name } = params;
+          return `${name} <br>
+          Total: ${value} <br>
           Percentage: ${percent}% <br>`;
+        },
+        textStyle: {
+          fontSize: '16',
         },
       },
       series: [
@@ -35,7 +40,12 @@ function initialize(response) {
           center: ['50%', '50%'],
           selectedMode: 'single',
           data: constructData(),
-
+          label: {
+            textStyle: {
+              fontSize: '21',
+            },
+            color: 'black',
+          },
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -45,6 +55,14 @@ function initialize(response) {
           },
         },
       ],
+      legend: {
+        orient: 'horizontal',
+        bottom: 'bottom',
+        data: constructData(),
+        textStyle: {
+          fontSize: '18',
+        },
+      },
     };
   }
 
@@ -92,53 +110,10 @@ function initialize(response) {
     }
   }
 
-  // draw legend items
-  function drawLegend() {
-    const legend = document.querySelector('.legend');
-    const timePeriodHtml = `<div class="time-period">Time Period: ${timePeriods.min} ${
-      timePeriods.min !== timePeriods.max ? `to ${timePeriods.max}` : ''
-    }</div>`;
-
-    function createLegend(status) {
-      const legendHTML = `<div class="legend-item">
-      <div class="icon" style="background-color:${getPieceColor(status.toUpperCase())}"></div>
-      <div class="text"><span>${status}</span></div>
-      </div>`;
-
-      legend.insertAdjacentHTML('afterbegin', legendHTML);
-    }
-
-    categories.forEach(createLegend);
-    legend.addEventListener('click', handleLegendClick);
-    legend.insertAdjacentHTML('afterend', timePeriodHtml);
-  }
-
-  // filter by legend items
-  function handleLegendClick(event) {
-    const item = event.target.closest('.legend-item');
-    const status = item.querySelector('.text').innerText;
-    const icon = item.querySelector('.icon');
-    const text = item.querySelector('.text');
-
-    function filterDataByStatus(status) {
-      if (categories.includes(status)) {
-        categories.splice(categories.indexOf(status), 1);
-      } else {
-        categories.push(status);
-      }
-
-      chart.setOption(getChartOptions());
-    }
-
-    filterDataByStatus(status);
-
-    if (categories.includes(status)) {
-      icon.style.backgroundColor = getPieceColor(status.toUpperCase());
-      text.style.color = 'black';
-    } else {
-      icon.style.backgroundColor = 'lightgrey';
-      text.style.color = 'lightgrey';
-    }
+  // draw time period item
+  function drawTimePeriod() {
+    const legendTimePeriod = document.querySelector('.legend .time-period');
+    legendTimePeriod.innerHTML = `Time Period: ${timePeriods.min} ${timePeriods.min !== timePeriods.max ? `to ${timePeriods.max}` : ''}`;
   }
 
   window.addEventListener('resize', () => chart.resize());

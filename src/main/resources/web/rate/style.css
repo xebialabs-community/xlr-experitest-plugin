@@ -7,6 +7,7 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 * {
   margin: 0;
   padding: 0;
@@ -19,7 +20,8 @@ body {
   height: 100vh;
 }
 
-#main {
+#main,
+.chart-container {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -29,31 +31,14 @@ body {
 .container {
   display: flex;
   flex-direction: column;
-  height: 80%;
+  height: 100%;
 }
 
 .legend {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  display: flex;
-  justify-content: center;
-}
-.legend .legend-item {
-  display: flex;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.legend .legend-item .icon {
-  height: 20px;
-  width: 30px;
-  border-radius: 6px;
-  margin-right: 6px;
+  text-align: center;
 }
 
 .time-period {
-  font-family: 'Open Sans', sans-serif;
-  margin: 0 auto;
-  font-size: 14px;
-  display: flex;
+  font-size: 18px;
+  margin-bottom: 20px;
 }
