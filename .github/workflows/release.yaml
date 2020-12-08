@@ -21,4 +21,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            ./build/libs/xlr-control-m-plugin-*.*
+            ./build/libs/xlr-experitest-plugin-*.*
