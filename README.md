@@ -5,7 +5,7 @@
 [![Github All Releases](https://img.shields.io/github/downloads/xebialabs-community/xlr-experitest-plugin/total.svg)](https://github.com/xebialabs-community/xlr-experitest-plugin/releases)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-blue.svg)](https://github.com/RichardLitt/standard-readme)
 
-XL Release Experitest plugin is deprecated now as the plugin is insourced to xebialabs organization.
+XL Release Experitest plugin is deprecated now as the plugin is insourced to Digital.ai organization.
 The plugin is available on https://dist.xebialabs.com/customer/xl-release/plugins/xlr-continuous-testing-plugin
 
 ## Installation
